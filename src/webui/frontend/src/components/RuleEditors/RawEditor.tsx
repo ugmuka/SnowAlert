@@ -7,6 +7,12 @@ import {
   CheckCircleOutlined,
 } from '@ant-design/icons';
 
+import {EditorState, EditorView, basicSetup} from "@codemirror/next/basic-setup";
+import {PostgreSQL} from "@codemirror/next/lang-sql";
+
+// import {CompletionContext, CompletionResult, CompletionSource} from '@codemirror/next/autocomplete';
+// import {schemaCompletion, PostgreSQL, MySQL, SQLConfig} from '@codemirror/next/lang-sql';
+
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
@@ -36,21 +42,33 @@ interface StateProps {
 type RawEditorProps = OwnProps & DispatchProps & StateProps;
 
 class RawEditor extends React.PureComponent<RawEditorProps> {
-  render() {
+  render(): JSX.Element {
     const {currentRuleView, deleteRule, saveRule, updateRuleBody} = this.props;
     const {queries, suppressions} = this.props.rules;
     const rules = [...queries, ...suppressions];
     const rule = rules.find((r) => r.viewName === currentRuleView);
 
+    let startState = EditorState.create({
+        doc: 'Hello World',
+        extensions: [basicSetup, PostgreSQL]
+    })
+
+    let view = (window).view = new EditorView({state: startState})
+    const editorDiv = document.querySelector('#editor');
+    editorDiv.innerHTML = '';
+    editorDiv.appendChild(view.dom)
+
     return (
       <div>
-        <Input.TextArea
+        {/* <Input.TextArea
           disabled={!rule || rule.isSaving}
           value={rule ? rule.raw.body : ''}
           spellCheck={false}
           autoSize={{minRows: 30}}
           onChange={(e) => rule && updateRuleBody(rule.viewName, e.target.value)}
-        />
+        /> */}
+        <div className="app"></div>
+
         <Button
           type="primary"
           disabled={!rule || rule.isSaving || (rule.isSaved && !rule.isEdited)}
