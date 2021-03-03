@@ -7,8 +7,8 @@ import {
   CheckCircleOutlined,
 } from '@ant-design/icons';
 
-import {EditorState, EditorView, basicSetup} from "@codemirror/next/basic-setup";
-import {PostgreSQL} from "@codemirror/next/lang-sql";
+import {EditorState, EditorView, basicSetup} from "@codemirror/basic-setup";
+import {PostgreSQL} from "@codemirror/lang-sql";
 
 // import {CompletionContext, CompletionResult, CompletionSource} from '@codemirror/next/autocomplete';
 // import {schemaCompletion, PostgreSQL, MySQL, SQLConfig} from '@codemirror/next/lang-sql';
